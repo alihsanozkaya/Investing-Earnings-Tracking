@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title">Kişi Ekleme</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm">
+        <div class="mb-3">
+            <label for="firstname">Ad</label>
+            <input id="firstname" formControlName="firstname" 
+                   class="form-control" 
+                   [ngClass]="{'border-danger': userForm.get('firstname')?.invalid && (userForm.get('firstname')?.touched || userForm.get('firstname')?.dirty)}"  
+                   placeholder="Ad" 
+                   (input)="clearError('firstname')" />
+        </div>
+        <div class="mb-3">
+            <label for="lastname">Soyad</label>
+            <input id="lastname" formControlName="lastname" 
+                   class="form-control" 
+                   [ngClass]="{'border-danger': userForm.get('lastname')?.invalid && (userForm.get('lastname')?.touched || userForm.get('lastname')?.dirty)}" 
+                   placeholder="Soyad" 
+                   (input)="clearError('lastname')" />
+        </div>
+        <div class="mb-3">
+            <label for="deposited">Maliyet</label>
+            <input id="deposited" formControlName="deposited" 
+                   class="form-control" 
+                   [ngClass]="{'border-danger': userForm.get('deposited')?.invalid && (userForm.get('deposited')?.touched || userForm.get('deposited')?.dirty)}" 
+                   placeholder="Maliyet" 
+                   (input)="clearError('deposited')" />
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addUser()">Kaydet</button>
+</div>

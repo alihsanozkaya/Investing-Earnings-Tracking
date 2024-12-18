@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h4 class="modal-title">Hisse Düzenleme</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="interestForm">
+        <div class="mb-3">
+            <label for="name">Hisse Adı</label>
+            <input id="name" formControlName="name" 
+            class="form-control" 
+            [ngClass]="{'border-danger': interestForm.get('name')?.invalid && (interestForm.get('name')?.touched || interestForm.get('name')?.dirty)}"  
+            placeholder="Hisse Adı" 
+            (input)="clearError('name')" />
+        </div>
+        <div class="mb-3">
+            <label for="unit">Adet</label>
+            <input id="unit" formControlName="unit" 
+                class="form-control" 
+                [ngClass]="{'border-danger': interestForm.get('unit')?.invalid && (interestForm.get('unit')?.touched || interestForm.get('unit')?.dirty)}"  
+                placeholder="Adet" 
+                (input)="clearError('unit')" />
+        </div>
+        <div class="mb-3">
+            <label for="buyPrice">Alış Fiyatı</label>
+            <input id="buyPrice" formControlName="buyPrice" 
+                class="form-control" 
+                [ngClass]="{'border-danger': interestForm.get('buyPrice')?.invalid && (interestForm.get('buyPrice')?.touched || interestForm.get('buyPrice')?.dirty)}"  
+                placeholder="Alış Fiyatı" 
+                (input)="clearError('buyPrice')" />        
+        </div>
+        <div class="mb-3">
+            <label for="sellPrice">Satış Fiyatı</label>
+            <input id="sellPrice" formControlName="sellPrice" 
+                class="form-control" 
+                [ngClass]="{'border-danger': interestForm.get('sellPrice')?.invalid && (interestForm.get('sellPrice')?.touched || interestForm.get('sellPrice')?.dirty)}"  
+                placeholder="Satış Fiyatı" 
+                (input)="clearError('sellPrice')" />         
+        </div>
+        <div class="mb-3">
+            <label for="userSelect">Kullanıcı Seç</label>
+            <select id="userSelect" formControlName="userId" class="form-control" 
+                [ngClass]="{'border-danger': interestForm.get('userId')?.invalid && (interestForm.get('userId')?.touched || interestForm.get('userId')?.dirty)}">
+                <option value="0" disabled>Kişi Seçiniz</option>
+                @for(user of users; track $index) {
+                    <option [value]="user.id">
+                        {{ user.firstname }} {{ user.lastname }}
+                    </option>
+                }
+            </select>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteInterest()">Sil</button>
+    <button type="button" class="btn btn-primary" (click)="updateInterest()">Kaydet</button>
+</div>

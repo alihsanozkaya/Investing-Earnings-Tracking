@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #C4B07B;
+}
+
+.btn-success {
+    border-color: #3FE810;
+    color: #000;
+    background-color: #3FE810;
+}
+
+.btn-success:hover {
+    border-color: #31AB0F;
+    color: #000;
+    background-color: #31AB0F;
+}
+
+.btn-warning {
+    border-color: #E0AA3E;
+    background-color: #E0AA3E;
+}
+
+.btn-warning:hover {
+    border-color: #C9AA2D;
+    background-color: #C9AA2D;
+}
+
+.btn-danger {
+    border-color: #FF1717;
+    background-color: #FF1717;
+}
+
+.btn-danger :hover {
+    border-color: #EE0606;
+    background-color: #EE0606;
+}
+
+.btn-primary {
+    border-color: #1DCDF0;
+    background-color: #1DCDF0;
+}
+
+.btn-primary:hover {
+    border-color: #0CBCD9;
+    background-color: #0CBCD9;
+}

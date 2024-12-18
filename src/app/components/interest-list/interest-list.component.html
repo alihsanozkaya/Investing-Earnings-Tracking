@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-between mb-2">
+  <span class="bg-white rounded p-1">Hisse Listesi</span>
+  <select id="userSelect" class="rounded" name="userSelect" (change)="onUserChange($event)">
+    <option value="all">Hepsi</option>
+    @for (user of users; track $index) {
+      <option [value]="user.id">
+        {{ user.firstname }} {{ user.lastname }}
+      </option>
+    }
+  </select>
+</div>
+<div class="rounded overflow-x">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Hisse Adı</th>
+        <th scope="col">Adet</th>
+        <th scope="col">Alış Fiyatı ₺</th>
+        <th scope="col">Satış Fiyatı ₺</th>
+        <th scope="col">Kar ₺</th>
+        <th scope="col">Kar Oran %</th>
+        <th scope="col">Toplam ₺</th>
+        <th>
+          <button class="btn btn-success btn-sm" (click)="openAddInterestModal()">Hisse Ekle</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (interest of pagedInterests(); track $index) {
+        <tr>
+          <th scope="row">{{ $index + 1 + (currentPage - 1) * itemsPerPage }}</th>
+          <td>{{ interest.name }}</td>
+          <td>{{ interest.unit }}</td>
+          <td>{{ interest.buyPrice }} ₺</td>
+          <td>{{ interest.sellPrice }} ₺</td>
+          <td [ngClass]="{ 'text-danger': (interest.sellPrice! - interest.buyPrice!) * (interest.unit!) < 0, 'text-success': (interest.sellPrice! - interest.buyPrice!) * (interest.unit!) > 0 }">
+            {{ (interest.sellPrice! - interest.buyPrice!) * (interest.unit!) | number: '1.2-2'}} ₺
+          </td>
+          <td [ngClass]="{ 'text-danger': (interest.sellPrice! - interest.buyPrice!) / (interest?.buyPrice ?? 1) * 100 < 0, 'text-success': (interest.sellPrice! - interest.buyPrice!) / (interest?.buyPrice ?? 1) * 100 > 0 }">
+            {{ (interest.sellPrice! - interest.buyPrice!) / (interest.buyPrice ?? 1) * 100 | number: '1.2-2' }} %
+          </td>
+          <td>{{ (interest.sellPrice!) * (interest.unit!) | number: '1.2-2' }} ₺</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="openUpdateInterestModal(interest)">Düzenle</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Önceki</a>
+      </li>
+      <li class="page-item" *ngFor="let page of pageNumbers()" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages()">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Sonraki</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="list-group">
+  <div class="list-group-item d-flex justify-content-between align-items-center">
+    <div>
+      <strong>Toplam Kar / Zarar</strong><br>
+    </div>
+    <span class="badge bg-primary rounded" [ngClass]="{'bg-danger': getTotalProfit() < 0, 'bg-success': getTotalProfit() > 0}">{{ getTotalProfit() | number: '1.2-2' }} ₺</span>
+  </div>
+  <div class="list-group-item d-flex justify-content-between align-items-center">
+    <div>
+      <strong>Toplam Tutar</strong><br>
+    </div>
+    <span class="badge bg-primary rounded">{{ getTotalAmount() | number: '1.2-2' }} ₺</span>
+  </div>
+</div>
